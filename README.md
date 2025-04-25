@@ -1,6 +1,6 @@
 # Kingsword09 Standard Library
-[![JSR Scope](https://jsr.io/badges/@kingsword09)](https://jsr.io/@kingsword09)
 
+[![JSR Scope](https://jsr.io/badges/@kingsword09)](https://jsr.io/@kingsword09)
 
 | Name                          | Description        | Version |
 | ----------------------------- | ------------------ | ------- |

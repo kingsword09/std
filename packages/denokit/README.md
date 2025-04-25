@@ -7,9 +7,9 @@
 ```ts
 import { which } from "jsr:@kingsword09/denokit";
 
-### Sync
+// Sync
 const denoExecPath = which.sync("deno");
 
-### Async
+// Async
 const denoExecPath = await which.async("deno");
 ```

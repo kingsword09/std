@@ -7,10 +7,10 @@
 ```ts
 import { which } from "jsr:@kingsword09/nodekit";
 
-### Sync
+// Sync
 const denoExecPath = which.sync("deno");
 
-### Async
+// Async
 const denoExecPath = await which.async("deno");
 ```
 
@@ -41,9 +41,9 @@ pnpm add jsr:@kingsword09/nodekit
 ```ts
 import { which } from "@kingsword09/nodekit";
 
-### Sync
+// Sync
 const denoExecPath = which.sync("deno");
 
-### Async
+// Async
 const denoExecPath = await which.async("deno");
 ```
