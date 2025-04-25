@@ -1,5 +1,6 @@
 {
   "name": "@kingsword09/denokit",
   "version": "0.0.1",
+  "license": "Apache-2.0 or MIT",
   "exports": {}
 }
