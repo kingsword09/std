@@ -4,7 +4,7 @@
 
 import node_process from "node:process";
 import node_fs from "node:fs";
-import { quansync } from "npm:quansync";
+import { quansync, type QuansyncFn } from "quansync";
 import { normalizePath } from "./path.ts";
 
 export interface Environment {
@@ -212,7 +212,8 @@ function getSystemInfo(
  * @param command - The name of the command to search for in the system PATH.
  * @returns The absolute path to the command if found, otherwise undefined.
  */
-export const which = quansync({
-  sync: (command: string) => whichSync(command),
-  async: (command: string) => whichAsync(command),
-});
+export const which: QuansyncFn<string | undefined, [command: string]> =
+  quansync({
+    sync: (command: string) => whichSync(command),
+    async: (command: string) => whichAsync(command),
+  });

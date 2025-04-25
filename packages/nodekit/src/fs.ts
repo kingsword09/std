@@ -1,6 +1,7 @@
 import node_fs from "node:fs";
-import { quansync } from "npm:quansync";
+import { quansync, type QuansyncFn } from "quansync";
 import { normalizePath } from "./path.ts";
+import type { Buffer } from "node:buffer";
 
 /**
  * Read file content from filesystem
@@ -22,7 +23,10 @@ import { normalizePath } from "./path.ts";
  * @param options - Encoding options for reading the file
  * @returns File content as string or buffer depending on encoding
  */
-export const readFile = quansync({
+export const readFile: QuansyncFn<
+  string | Buffer<ArrayBufferLike>,
+  [path: string, options?: node_fs.ObjectEncodingOptions | undefined]
+> = quansync({
   sync: (
     path: string,
     options: node_fs.ObjectEncodingOptions = { encoding: "utf-8" },
@@ -43,7 +47,7 @@ export const readFile = quansync({
  * @param path - Path to check for existence
  * @returns Boolean indicating if path exists
  */
-const existsAsync = (path: string) => {
+const existsAsync = (path: string): Promise<boolean> => {
   return node_fs.promises.access(normalizePath(path)).then(
     () => true,
     () => false,
@@ -69,7 +73,7 @@ const existsAsync = (path: string) => {
  * @param path - Path to check for existence
  * @returns Boolean indicating if path exists
  */
-export const exists = quansync({
+export const exists: QuansyncFn<boolean, [path: string]> = quansync({
   sync: (path: string) => node_fs.existsSync(normalizePath(path)),
   async: (path: string) => existsAsync(normalizePath(path)),
 });

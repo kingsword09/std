@@ -16,7 +16,7 @@ import { fileURLToPath } from "node:url";
  * @param path - Path to normalize
  * @returns Normalized path
  */
-export const normalizePath = (path: string) => {
+export const normalizePath = (path: string): string => {
   if (path.startsWith("file://")) {
     return fileURLToPath(path);
   }

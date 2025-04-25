@@ -1,4 +1,4 @@
-import { quansync } from "npm:quansync";
+import { quansync } from "quansync";
 import {
   type Environment,
   which as whichAsync,

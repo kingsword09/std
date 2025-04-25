@@ -8,15 +8,14 @@
     "./path": "./src/path.ts",
     "./which": "./src/which.ts"
   },
+  "imports": {
+    "quansync": "npm:quansync@^0.2.10"
+  },
   "publish": {
-    "exclude": [
-      "tests/*"
-    ],
     "include": [
       "src/*.ts",
       "mod.ts",
-      "README.md",
-      "../../LICENSE*"
+      "README.md"
     ]
   }
 }
