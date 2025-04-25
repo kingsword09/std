@@ -1,1 +1,1 @@
-export * from "./which.ts";
+export * from "./src/which.ts";

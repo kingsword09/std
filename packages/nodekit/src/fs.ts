@@ -4,6 +4,20 @@ import { normalizePath } from "./path.ts";
 
 /**
  * Read file content from filesystem
+ *
+ * @example
+ * ```ts
+ * import { readFile } from "jsr:@kingsword09/nodekit/fs";
+ *
+ * #### Sync
+ * const content = readFile.sync("file.txt");
+ * console.log(content);
+ *
+ * #### Async
+ * const content = await readFile.async("file.txt");
+ * console.log(content);
+ * ```
+ *
  * @param path - File path to read
  * @param options - Encoding options for reading the file
  * @returns File content as string or buffer depending on encoding
@@ -38,6 +52,20 @@ const existsAsync = (path: string) => {
 
 /**
  * Check if a file or directory exists at the given path
+ *
+ * @example
+ * ```ts
+ * import { exists } from "jsr:@kingsword09/nodekit/fs";
+ *
+ * #### Sync
+ * const isExists = exists.sync("file.txt");
+ * console.log(isExists);
+ *
+ * #### Async
+ * const isExists = await exists.async("file.txt");
+ * console.log(isExists);
+ * ```
+ *
  * @param path - Path to check for existence
  * @returns Boolean indicating if path exists
  */

@@ -1,5 +1,5 @@
 import { assertEquals } from "jsr:@std/assert";
-import { normalizePath } from "../path.ts";
+import { normalizePath } from "../src/path.ts";
 
 Deno.test(
   "normalizePath non windows",

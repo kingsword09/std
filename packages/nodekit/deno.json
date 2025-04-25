@@ -4,13 +4,19 @@
   "license": "Apache-2.0 or MIT",
   "exports": {
     ".": "./mod.ts",
-    "./fs": "./fs.ts",
-    "./path": "./path.ts",
-    "./which": "./which.ts"
+    "./fs": "./src/fs.ts",
+    "./path": "./src/path.ts",
+    "./which": "./src/which.ts"
   },
   "publish": {
     "exclude": [
       "tests/*"
+    ],
+    "include": [
+      "src/*.ts",
+      "mod.ts",
+      "README.md",
+      "../../LICENSE*"
     ]
   }
 }

@@ -1,9 +1,9 @@
 import { assertEquals } from "jsr:@std/assert";
-import { which } from "../which.ts";
+import { which } from "../src/which.ts";
 
 const expectedCurlLocation = await getLocation("curl");
 
-Deno.test("nodekit which", async (_t) => {
+Deno.test("denokit which", async (_t) => {
   let curlPath = await which.async("curl");
   assertEquals(curlPath, expectedCurlLocation);
 

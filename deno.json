@@ -8,6 +8,11 @@
   "workspace": [
     "packages/*"
   ],
+  "test": {
+    "include": [
+      "tests/**/*.test.ts"
+    ]
+  },
   "tasks": {
     "fmt:check": "deno fmt --check"
   }

@@ -1,3 +1,3 @@
-export * from "./path.ts";
-export * from "./fs.ts";
-export * from "./which.ts";
+export * from "./src/path.ts";
+export * from "./src/fs.ts";
+export * from "./src/which.ts";
