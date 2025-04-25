@@ -1,0 +1,16 @@
+{
+	"name": "@kingsword09/nodekit",
+	"version": "0.0.1",
+	"license": "Apache-2.0 or MIT",
+	"exports": {
+		".": "./mod.ts",
+		"./fs": "./fs.ts",
+		"./path": "./path.ts",
+		"./which": "./which.ts"
+	},
+	"publish": {
+		"exclude": [
+			"tests/*"
+		]
+	}
+}
