@@ -1,14 +1,14 @@
 {
-	"name": "@kingsword09/std",
-	"version": "0.0.1",
-	"lock": false,
-	"license": "Apache-2.0 or MIT",
-	"exports": {},
-	"description": "Personal utility standard library for individual use",
-	"workspace": [
-		"packages/*"
-	],
-	"tasks": {
-		"fmt:check": "deno fmt --check"
-	}
+  "name": "@kingsword09/std",
+  "version": "0.0.1",
+  "lock": false,
+  "license": "Apache-2.0 or MIT",
+  "exports": {},
+  "description": "Personal utility standard library for individual use",
+  "workspace": [
+    "packages/*"
+  ],
+  "tasks": {
+    "fmt:check": "deno fmt --check"
+  }
 }

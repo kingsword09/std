@@ -1,8 +1,8 @@
 import { quansync } from "npm:quansync";
 import {
+  type Environment,
   which as whichAsync,
   whichSync,
-  type Environment,
 } from "jsr:@david/which";
 
 /**
@@ -18,4 +18,4 @@ const which = quansync({
   async: (command: string) => whichAsync(command),
 });
 
-export { which, whichAsync, whichSync, type Environment };
+export { type Environment, which, whichAsync, whichSync };

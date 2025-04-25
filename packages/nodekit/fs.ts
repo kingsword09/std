@@ -11,12 +11,12 @@ import { normalizePath } from "./path.ts";
 export const readFile = quansync({
   sync: (
     path: string,
-    options: node_fs.ObjectEncodingOptions = { encoding: "utf-8" }
+    options: node_fs.ObjectEncodingOptions = { encoding: "utf-8" },
   ) =>
     node_fs.readFileSync(normalizePath(path), { encoding: options.encoding }),
   async: (
     path: string,
-    options: node_fs.ObjectEncodingOptions = { encoding: "utf-8" }
+    options: node_fs.ObjectEncodingOptions = { encoding: "utf-8" },
   ) =>
     node_fs.promises.readFile(normalizePath(path), {
       encoding: options.encoding,
@@ -32,7 +32,7 @@ export const readFile = quansync({
 const existsAsync = (path: string) => {
   return node_fs.promises.access(normalizePath(path)).then(
     () => true,
-    () => false
+    () => false,
   );
 };
 

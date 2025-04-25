@@ -51,7 +51,7 @@ export class RealEnvironment implements Environment {
 /** Finds the path to the specified command asynchronously. */
 export async function whichAsync(
   command: string,
-  environment: Omit<Environment, "statSync"> = new RealEnvironment()
+  environment: Omit<Environment, "statSync"> = new RealEnvironment(),
 ): Promise<string | undefined> {
   const systemInfo = getSystemInfo(command, environment);
   if (systemInfo == null) {
@@ -79,7 +79,7 @@ export async function whichAsync(
 
 async function pathMatches(
   environment: Omit<Environment, "statSync">,
-  path: string
+  path: string,
 ): Promise<boolean> {
   try {
     const result = await environment.stat(path);
@@ -92,7 +92,7 @@ async function pathMatches(
 /** Finds the path to the specified command synchronously. */
 export function whichSync(
   command: string,
-  environment: Omit<Environment, "stat"> = new RealEnvironment()
+  environment: Omit<Environment, "stat"> = new RealEnvironment(),
 ): string | undefined {
   const systemInfo = getSystemInfo(command, environment);
   if (systemInfo == null) {
@@ -120,7 +120,7 @@ export function whichSync(
 
 function pathMatchesSync(
   environment: Omit<Environment, "stat">,
-  path: string
+  path: string,
 ): boolean {
   try {
     const result = environment.statSync(path);
@@ -138,7 +138,7 @@ interface SystemInfo {
 
 function getSystemInfo(
   command: string,
-  environment: Omit<Environment, "stat" | "statSync">
+  environment: Omit<Environment, "stat" | "statSync">,
 ): SystemInfo | undefined {
   const isWindows = environment.os === "win32";
   const envValueSeparator = isWindows ? ";" : ":";
