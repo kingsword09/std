@@ -7,6 +7,7 @@
     "./which": "./src/which.ts"
   },
   "imports": {
+    "@david/which": "jsr:@david/which@^0.4.1",
     "quansync": "npm:quansync@^0.2.10"
   },
   "publish": {

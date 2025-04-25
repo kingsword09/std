@@ -1,9 +1,5 @@
-import { quansync } from "quansync";
-import {
-  type Environment,
-  which as whichAsync,
-  whichSync,
-} from "jsr:@david/which";
+import { quansync, type QuansyncFn } from "quansync";
+import { type Environment, which as whichAsync, whichSync } from "@david/which";
 
 /**
  * Finds the path to the specified command, supporting both synchronous and asynchronous usage.
@@ -27,7 +23,7 @@ import {
  * @returns The absolute path to the command if found, otherwise undefined.
  * @module
  */
-const which = quansync({
+const which: QuansyncFn<string | undefined, [command: string]> = quansync({
   sync: (command: string) => whichSync(command),
   async: (command: string) => whichAsync(command),
 });
