@@ -1,3 +1,7 @@
+/**
+ * Path Utilities
+ * @module
+ */
 import node_path from "node:path";
 import { fileURLToPath } from "node:url";
 

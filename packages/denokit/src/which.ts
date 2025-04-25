@@ -25,6 +25,7 @@ import {
  *
  * @param command - The name of the command to search for in the system PATH.
  * @returns The absolute path to the command if found, otherwise undefined.
+ * @module
  */
 const which = quansync({
   sync: (command: string) => whichSync(command),

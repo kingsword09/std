@@ -1,5 +1,7 @@
 # @kingsword09/nodekit
 
+[![JSR](https://jsr.io/badges/@kingsword09/nodekit)](https://jsr.io/@kingsword09/nodekit)
+
 ### Deno
 
 #### Example

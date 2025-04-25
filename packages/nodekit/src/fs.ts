@@ -1,3 +1,8 @@
+/**
+ * File System Utilities
+ * @module
+ */
+
 import node_fs from "node:fs";
 import { quansync, type QuansyncFn } from "quansync";
 import { normalizePath } from "./path.ts";
