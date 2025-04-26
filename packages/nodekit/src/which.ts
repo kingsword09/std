@@ -200,11 +200,11 @@ function getSystemInfo(
  * ```ts
  * import { which } from "jsr:@kingsword09/nodekit/which";
  *
- * #### Sync
+ * // Sync
  * const commandPath = which.sync("deno");
  * console.log(commandPath); // "/path/to/deno"
  *
- * #### Async
+ * // Async
  * const commandPath = await which.async("deno");
  * console.log(commandPath); // "/path/to/deno"
  * ```
