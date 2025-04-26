@@ -33,7 +33,7 @@ pnpm add jsr:@kingsword09/nodekit
 ```json
 {
   "dependencies": {
-    "@kingsword09/nodekit": "jsr:0.0.1"
+    "@kingsword09/nodekit": "jsr:x.y.z"
   }
 }
 ```
