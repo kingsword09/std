@@ -9,36 +9,36 @@ import type { Buffer } from "node:buffer";
 import { normalizePath } from "./path.ts";
 
 //#region readFile
-export interface ReadFile {
-  sync(
-    path: string,
-    options?: { encoding?: null | undefined; flag?: string },
-  ): Buffer;
-  sync(
-    path: string,
-    options: { encoding: NodeJS.BufferEncoding; flag?: string },
-  ): string;
-  sync(
-    path: string,
-    options?: node_fs.ObjectEncodingOptions | NodeJS.BufferEncoding | null,
-  ): string | Buffer;
-  async(
-    path: string,
-    options?: { encoding?: null | undefined; flag?: string },
-  ): Promise<Buffer>;
-  async(
-    path: string,
-    options: { encoding: NodeJS.BufferEncoding; flag?: string },
-  ): Promise<string>;
-  async(
-    path: string,
-    options?: node_fs.ObjectEncodingOptions | NodeJS.BufferEncoding | null,
-  ): Promise<string | Buffer>;
-}
+/**
+ * Using Proxy to intercept file path arguments and normalize them before passing to Node.js fs functions
+ * This ensures consistent path handling across different platforms
+ */
+const readFileSync = new Proxy(node_fs.readFileSync, {
+  apply(target, thisArg, argArray) {
+    if (typeof argArray[0] === "string") {
+      argArray[0] = normalizePath(argArray[0]);
+    }
+    return Reflect.apply(target, thisArg, argArray);
+  },
+});
+
+/**
+ * Using Proxy to intercept file path arguments and normalize them before passing to Node.js fs functions
+ * This ensures consistent path handling across different platforms
+ */
+const readFileAsync = new Proxy(node_fs.promises.readFile, {
+  apply(target, thisArg, argArray) {
+    if (typeof argArray[0] === "string") {
+      argArray[0] = normalizePath(argArray[0]);
+    }
+    return Reflect.apply(target, thisArg, argArray);
+  },
+});
 
 /**
  * Read file content from filesystem
- *
+ * @see {@link https://nodejs.org/api/fs.html#fspromisesreadfilepath-options}
+ * @see {@link https://github.com/quansync-dev/fs/blob/cf367ffed0d98716fa1c831ea78f996e3a89dd19/src/index.ts#L22}
  * @example
  * ```ts
  * import { readFile } from "jsr:@kingsword09/nodekit/fs";
@@ -56,46 +56,30 @@ export interface ReadFile {
  * @param options - Encoding options for reading the file
  * @returns File content as string or buffer depending on encoding
  */
-export const readFile: ReadFile = Object.assign({
-  sync(
-    path: string,
-    options?: node_fs.ObjectEncodingOptions | NodeJS.BufferEncoding | null,
-  ) {
-    return node_fs.readFileSync(normalizePath(path), options);
-  },
-  async(
-    path: string,
-    options?: node_fs.ObjectEncodingOptions | NodeJS.BufferEncoding | null,
-  ) {
-    return node_fs.promises.readFile(normalizePath(path), options);
-  },
-});
-
-/**
- * Read file content from filesystem
- *
- * @example
- * ```ts
- * import { readFileString } from "jsr:@kingsword09/nodekit/fs";
- *
- * // Sync
- * const content = readFileString.sync("file.txt");
- * console.log(content);
- *
- * // Async
- * const content = await readFileString.async("file.txt");
- * console.log(content);
- * ```
- *
- * @param path - File path to read
- * @returns File content as string depending on encoding utf-8
- */
-export const readFileString: QuansyncFn<string, [path: string]> = quansync({
-  sync: (path: string) =>
-    node_fs.readFileSync(normalizePath(path), { encoding: "utf-8" }),
-  async: (path: string) =>
-    node_fs.promises.readFile(normalizePath(path), { encoding: "utf-8" }),
-});
+export const readFile = quansync({
+  sync: readFileSync,
+  // deno-lint-ignore no-explicit-any
+  async: readFileAsync as any,
+}) as
+  & QuansyncFn<
+    Buffer,
+    [
+      path: node_fs.PathLike,
+      options?: {
+        encoding?: null | undefined;
+        flag?: string | undefined;
+      } | null,
+    ]
+  >
+  & QuansyncFn<
+    string,
+    [
+      path: node_fs.PathLike,
+      options:
+        | { encoding: NodeJS.BufferEncoding; flag?: string | undefined }
+        | NodeJS.BufferEncoding,
+    ]
+  >;
 //#endregion
 
 //#region exists

@@ -5,7 +5,7 @@
 
 import { parse } from "@std/jsonc";
 import { quansync, type QuansyncAwaitableGenerator } from "quansync";
-import { readFileString } from "./fs.ts";
+import { readFile } from "./fs.ts";
 
 /**
  * Read json or jsonc file content from filesystem
@@ -27,7 +27,7 @@ import { readFileString } from "./fs.ts";
  * @returns json or jsonc content as object
  */
 export const readJson = quansync(function* <T>(path: string) {
-  const content = yield* readFileString(path);
+  const content = yield* readFile(path, { encoding: "utf-8" });
   return parse(content) as T;
 }) as {
   <T>(path: string): QuansyncAwaitableGenerator<T>;
