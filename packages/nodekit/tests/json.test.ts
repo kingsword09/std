@@ -20,7 +20,9 @@ Deno.test("readJson", async (_t) => {
     },
   );
   assertEquals(
-    await readJson.async(import.meta.resolve("./assets/json.test.jsonc")),
+    await readJson.async<{ foo: "bar" }>(
+      import.meta.resolve("./assets/json.test.jsonc"),
+    ),
     {
       foo: "bar",
     },

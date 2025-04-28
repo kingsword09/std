@@ -44,11 +44,11 @@ export interface ReadFile {
  * import { readFile } from "jsr:@kingsword09/nodekit/fs";
  *
  * // Sync
- * const content = readFile("file.txt").sync();
+ * const content = readFile.sync("file.txt");
  * console.log(content);
  *
  * // Async
- * const content = await readFile("file.txt").async();
+ * const content = await readFile.async("file.txt");
  * console.log(content);
  * ```
  *
@@ -69,6 +69,32 @@ export const readFile: ReadFile = Object.assign({
   ) {
     return node_fs.promises.readFile(normalizePath(path), options);
   },
+});
+
+/**
+ * Read file content from filesystem
+ *
+ * @example
+ * ```ts
+ * import { readFileString } from "jsr:@kingsword09/nodekit/fs";
+ *
+ * // Sync
+ * const content = readFileString.sync("file.txt");
+ * console.log(content);
+ *
+ * // Async
+ * const content = await readFileString.async("file.txt");
+ * console.log(content);
+ * ```
+ *
+ * @param path - File path to read
+ * @returns File content as string depending on encoding utf-8
+ */
+export const readFileString: QuansyncFn<string, [path: string]> = quansync({
+  sync: (path: string) =>
+    node_fs.readFileSync(normalizePath(path), { encoding: "utf-8" }),
+  async: (path: string) =>
+    node_fs.promises.readFile(normalizePath(path), { encoding: "utf-8" }),
 });
 //#endregion
 
@@ -94,11 +120,11 @@ const existsAsync = (path: string): Promise<boolean> => {
  * import { exists } from "jsr:@kingsword09/nodekit/fs";
  *
  * // Sync
- * const isExists = exists("file.txt").sync();
+ * const isExists = exists.sync("file.txt");
  * console.log(isExists);
  *
  * // Async
- * const isExists = await exists("file.txt").async();
+ * const isExists = await exists.async("file.txt");
  * console.log(isExists);
  * ```
  *

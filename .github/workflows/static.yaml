@@ -5,7 +5,7 @@ on:
     tags:
       - "@kingsword09/*"
 
-jobs: 
+jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
