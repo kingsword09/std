@@ -12,12 +12,7 @@ Deno.test("nodekit which", async (_t) => {
 });
 
 async function getLocation(command: string) {
-  const cmd = Deno.build.os === "windows"
-    ? ["cmd", "/c", "where", command]
-    : ["which", command];
-  const p = await new Deno.Command(cmd[0], {
-    args: cmd.slice(1),
-    stdout: "piped",
-  }).output();
+  const cmd = Deno.build.os === "windows" ? ["cmd", "/c", "where", command] : ["which", command];
+  const p = await new Deno.Command(cmd[0], { args: cmd.slice(1), stdout: "piped" }).output();
   return new TextDecoder().decode(p.stdout).split(/\r?\n/)[0];
 }

@@ -2,8 +2,8 @@
  * @see {@link https://github.com/dsherret/deno-which/blob/dd5239be39174238b66d1d031356b6729aa3276a/mod.ts}
  */
 
-import node_process from "node:process";
 import node_fs from "node:fs";
+import node_process from "node:process";
 import { quansync, type QuansyncFn } from "quansync";
 import { normalizePath } from "./path.ts";
 
@@ -77,10 +77,7 @@ export async function whichAsync(
   return undefined;
 }
 
-async function pathMatches(
-  environment: Omit<Environment, "statSync">,
-  path: string,
-): Promise<boolean> {
+async function pathMatches(environment: Omit<Environment, "statSync">, path: string): Promise<boolean> {
   try {
     const result = await environment.stat(path);
     return result.isFile();
@@ -118,10 +115,7 @@ export function whichSync(
   return undefined;
 }
 
-function pathMatchesSync(
-  environment: Omit<Environment, "stat">,
-  path: string,
-): boolean {
+function pathMatchesSync(environment: Omit<Environment, "stat">, path: string): boolean {
   try {
     const result = environment.statSync(path);
     return result.isFile();
@@ -136,10 +130,7 @@ interface SystemInfo {
   isNameMatch: (a: string, b: string) => boolean;
 }
 
-function getSystemInfo(
-  command: string,
-  environment: Omit<Environment, "stat" | "statSync">,
-): SystemInfo | undefined {
+function getSystemInfo(command: string, environment: Omit<Environment, "stat" | "statSync">): SystemInfo | undefined {
   const isWindows = environment.os === "win32";
   const envValueSeparator = isWindows ? ";" : ":";
   const path = environment.env("PATH");
@@ -151,9 +142,7 @@ function getSystemInfo(
   return {
     pathItems: splitEnvValue(path).map((item) => normalizeDir(item)),
     pathExts: getPathExts(),
-    isNameMatch: isWindows
-      ? (a, b) => a.toLowerCase() === b.toLowerCase()
-      : (a, b) => a === b,
+    isNameMatch: isWindows ? (a, b) => a.toLowerCase() === b.toLowerCase() : (a, b) => a === b,
   };
 
   function getPathExts() {
@@ -177,10 +166,7 @@ function getSystemInfo(
   }
 
   function splitEnvValue(value: string) {
-    return value
-      .split(envValueSeparator)
-      .map((item) => item.trim())
-      .filter((item) => item.length > 0);
+    return value.split(envValueSeparator).map((item) => item.trim()).filter((item) => item.length > 0);
   }
 
   function normalizeDir(dirPath: string) {
@@ -213,8 +199,7 @@ function getSystemInfo(
  * @returns The absolute path to the command if found, otherwise undefined.
  * @module
  */
-export const which: QuansyncFn<string | undefined, [command: string]> =
-  quansync({
-    sync: (command: string) => whichSync(command),
-    async: (command: string) => whichAsync(command),
-  });
+export const which: QuansyncFn<string | undefined, [command: string]> = quansync({
+  sync: (command: string) => whichSync(command),
+  async: (command: string) => whichAsync(command),
+});

@@ -14,10 +14,6 @@
     "quansync": "npm:quansync@^0.2.10"
   },
   "publish": {
-    "include": [
-      "src/*.ts",
-      "mod.ts",
-      "README.md"
-    ]
+    "include": ["src/*.ts", "mod.ts", "README.md"]
   }
 }

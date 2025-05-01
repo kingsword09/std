@@ -26,7 +26,7 @@ import { readFile } from "./fs.ts";
  * @param path - json or jsonc file path to read
  * @returns json or jsonc content as object
  */
-export const readJson = quansync(function* <T>(path: string) {
+export const readJson = quansync(function*<T>(path: string) {
   const content = yield* readFile(path, { encoding: "utf-8" });
   return parse(content) as T;
 }) as {

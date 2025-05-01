@@ -3,12 +3,12 @@
  * @module
  */
 
+import type { Buffer } from "node:buffer";
 import node_fs from "node:fs";
 import { quansync, type QuansyncFn } from "quansync";
-import type { Buffer } from "node:buffer";
 import { normalizePath } from "./path.ts";
 
-//#region readFile
+// #region readFile
 /**
  * Using Proxy to intercept file path arguments and normalize them before passing to Node.js fs functions
  * This ensures consistent path handling across different platforms
@@ -63,26 +63,18 @@ export const readFile = quansync({
 }) as
   & QuansyncFn<
     Buffer,
-    [
-      path: node_fs.PathLike,
-      options?: {
-        encoding?: null | undefined;
-        flag?: string | undefined;
-      } | null,
-    ]
+    [path: node_fs.PathLike, options?: { encoding?: null | undefined; flag?: string | undefined; } | null]
   >
   & QuansyncFn<
     string,
     [
       path: node_fs.PathLike,
-      options:
-        | { encoding: NodeJS.BufferEncoding; flag?: string | undefined }
-        | NodeJS.BufferEncoding,
+      options: { encoding: NodeJS.BufferEncoding; flag?: string | undefined; } | NodeJS.BufferEncoding,
     ]
   >;
-//#endregion
+// #endregion
 
-//#region exists
+// #region exists
 /**
  * Check if a file or directory exists at the given path
  * @see {@link https://github.com/rolldown/tsdown/blob/7878fdfc0d718b424f5523049f22b003b65e9084/src/utils/fs.ts#L4}
@@ -90,10 +82,7 @@ export const readFile = quansync({
  * @returns Boolean indicating if path exists
  */
 const existsAsync = (path: string): Promise<boolean> => {
-  return node_fs.promises.access(normalizePath(path)).then(
-    () => true,
-    () => false,
-  );
+  return node_fs.promises.access(normalizePath(path)).then(() => true, () => false);
 };
 
 /**
@@ -119,4 +108,4 @@ export const exists: QuansyncFn<boolean, [path: string]> = quansync({
   sync: (path: string) => node_fs.existsSync(normalizePath(path)),
   async: (path: string) => existsAsync(normalizePath(path)),
 });
-//#endregion
+// #endregion

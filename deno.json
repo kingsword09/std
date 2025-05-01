@@ -14,7 +14,7 @@
     ]
   },
   "tasks": {
-    "fmt:check": "deno fmt --check",
+    "fmt": "deno run -A npm:dprint fmt",
     "docs": "deno doc --html --output=\"docs\" --name=\"Kingsword09 Standard Library Docs\" packages/**/*.ts"
   }
 }

@@ -1,5 +1,5 @@
-import { quansync, type QuansyncFn } from "quansync";
 import { type Environment, which as whichAsync, whichSync } from "@david/which";
+import { quansync, type QuansyncFn } from "quansync";
 
 /**
  * Finds the path to the specified command, supporting both synchronous and asynchronous usage.
