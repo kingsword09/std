@@ -1,6 +1,7 @@
 {
   "name": "@kingsword09/denokit",
   "version": "0.0.1",
+  "description": "Deno utility standard library for individual use",
   "license": "Apache-2.0 or MIT",
   "exports": {
     ".": "./mod.ts",
@@ -11,6 +12,10 @@
     "quansync": "npm:quansync@^0.2.10"
   },
   "publish": {
-    "include": ["src/*.ts", "mod.ts", "README.md"]
+    "include": [
+      "src/*.ts",
+      "mod.ts",
+      "README.md"
+    ]
   }
 }

@@ -2,6 +2,12 @@
   "name": "@kingsword09/std",
   "version": "0.0.1",
   "lock": false,
+  "author": "Kingsword kingsword09 <kingsword09@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kingsword09/std.git"
+  },
+  "homepage": "https://github.com/kingsword09/std#readme",
   "license": "Apache-2.0 or MIT",
   "exports": {},
   "description": "Personal utility standard library for individual use",
@@ -14,7 +20,18 @@
     ]
   },
   "tasks": {
-    "fmt": "deno run -A npm:dprint fmt",
+    "fmt": "deno task dprint fmt",
+    "fmt:check": "deno task dprint check",
+    "dprint": "deno run -A npm:dprint",
+    "build": "deno run -A packages/**/build.ts",
+    "test": "deno test -A",
+    "test:coverage": "deno test -A --coverage",
     "docs": "deno doc --html --output=\"docs\" --name=\"Kingsword09 Standard Library Docs\" packages/**/*.ts"
+  },
+  "imports": {
+    "rolldown": "npm:rolldown@^1.0.0-beta.8",
+    "rolldown-plugin-dts": "npm:rolldown-plugin-dts@^0.9.11",
+    "tsdown": "npm:tsdown@^0.10.2",
+    "unconfig": "npm:unconfig@^7.3.2"
   }
 }

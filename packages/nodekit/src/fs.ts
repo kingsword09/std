@@ -74,6 +74,60 @@ export const readFile = quansync({
   >;
 // #endregion
 
+// #region writeFileSimple
+/**
+ * Using Proxy to intercept file path arguments and normalize them before passing to Node.js fs functions
+ * This ensures consistent path handling across different platforms
+ */
+const writeFileSync = new Proxy(node_fs.writeFileSync, {
+  apply(target, thisArg, argArray) {
+    if (typeof argArray[0] === "string") {
+      argArray[0] = normalizePath(argArray[0]);
+    }
+
+    return Reflect.apply(target, thisArg, argArray);
+  },
+});
+/**
+ * Using Proxy to intercept file path arguments and normalize them before passing to Node.js fs functions
+ * This ensures consistent path handling across different platforms
+ */
+const writeFileAsync = new Proxy(node_fs.promises.writeFile, {
+  apply(target, thisArg, argArray) {
+    if (typeof argArray[0] === "string") {
+      argArray[0] = normalizePath(argArray[0]);
+    }
+
+    return Reflect.apply(target, thisArg, argArray);
+  },
+});
+
+/**
+ * Write file content to filesystem
+ *
+ * @example
+ * ```ts
+ * import { writeFileSimple } from "jsr:@kingsword09/nodekit/fs";
+ *
+ * // Sync
+ * writeFileSimple.sync("file.txt", "Hello World");
+ *
+ * // Async
+ * await writeFileSimple.async("file.txt", "Hello World");
+ * ```
+ *
+ * @param path - File path to write
+ * @param data - File content to write
+ * @param options - Write file option
+ * @returns void
+ */
+export const writeFileSimple = quansync({
+  sync: writeFileSync,
+  // deno-lint-ignore no-explicit-any
+  async: writeFileAsync as any,
+}) as QuansyncFn<void, [path: node_fs.PathOrFileDescriptor, data: string, options?: node_fs.WriteFileOptions]>;
+// #endregion
+
 // #region exists
 /**
  * Check if a file or directory exists at the given path

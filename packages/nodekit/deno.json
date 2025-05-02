@@ -1,6 +1,7 @@
 {
   "name": "@kingsword09/nodekit",
   "version": "0.0.6",
+  "description": "Node utility standard library for individual use",
   "license": "Apache-2.0 or MIT",
   "exports": {
     ".": "./mod.ts",
@@ -13,7 +14,17 @@
     "@std/jsonc": "jsr:@std/jsonc@^1.0.2",
     "quansync": "npm:quansync@^0.2.10"
   },
+  "exclude": [
+    "dist/"
+  ],
   "publish": {
-    "include": ["src/*.ts", "mod.ts", "README.md"]
+    "include": [
+      "src/*.ts",
+      "mod.ts",
+      "README.md"
+    ],
+    "exclude": [
+      "build.ts"
+    ]
   }
 }

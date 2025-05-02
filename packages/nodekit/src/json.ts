@@ -4,8 +4,8 @@
  */
 
 import { parse } from "@std/jsonc";
-import { quansync, type QuansyncAwaitableGenerator } from "quansync";
-import { readFile } from "./fs.ts";
+import { quansync, type QuansyncAwaitableGenerator, type QuansyncFn } from "quansync";
+import { readFile, writeFileSimple } from "./fs.ts";
 
 /**
  * Read json or jsonc file content from filesystem
@@ -34,3 +34,27 @@ export const readJson = quansync(function*<T>(path: string) {
   sync: <T>(path: string) => T;
   async: <T>(path: string) => Promise<T>;
 };
+
+/**
+ * Write json or jsonc file content to filesystem
+ *
+ * @example
+ * ```ts
+ * import { writeJson } from "jsr:@kingsword09/nodekit/fs";
+ *
+ * // Sync
+ * writeJson.sync("./file.json", JSON.stringify({ a: 1 }, null, 2));
+ *
+ * // Async
+ * await writeJson.async("./file.jsonc", JSON.stringify({ a: 1 }, null, 2));
+ * ```
+ *
+ * @param path - json or jsonc file path to write
+ * @param data - json or jsonc content to write
+ * @returns void
+ */
+export const writeJson: QuansyncFn<void, [path: string, data: string]> = quansync(
+  function*(path: string, data: string) {
+    yield* writeFileSimple(path, data, { encoding: "utf-8" });
+  },
+);
