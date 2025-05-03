@@ -20,7 +20,9 @@ interface DenoJson {
 }
 
 interface PackageJsonExports {
-  [key: string]: { import: { types: string; default: string; }; require: { types: string; default: string; }; };
+  [key: string]:
+    | { import: { types: string; default: string; }; require: { types: string; default: string; }; }
+    | string;
 }
 
 interface PackageJson {
@@ -29,6 +31,7 @@ interface PackageJson {
   description: string;
   main: string;
   module: string;
+  types: string;
   exports: PackageJsonExports;
   license?: string;
   author?: string;
@@ -72,6 +75,7 @@ const packageJsonGen = async (
           ...filteredConfig,
           main: "./cjs/mod.js",
           module: "./esm/mod.mjs",
+          types: "./cjs/mod.d.ts",
           exports: packageJsonExports,
           engines: { pnpm: ">=10.9.0" },
         } satisfies PackageJson;
@@ -130,6 +134,9 @@ export const npmBuild = async (cwd: string) => {
 
     entries[key] = node_path.join(normalizePath(cwd), entry[1]);
   });
+
+  // 添加 package.json 导出
+  packageJsonExports["./package.json"] = "./package.json";
 
   await build({
     entry: entries,
