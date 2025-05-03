@@ -4,7 +4,7 @@ import node_fs from "node:fs/promises";
 import node_path from "node:path";
 import { build } from "tsdown";
 import { loadConfig } from "unconfig";
-import "npm:typescript";
+import "typescript";
 
 interface DenoJson {
   name: string;
@@ -38,14 +38,10 @@ interface PackageJson {
   repository?: { "type": string; "url": string; };
   homepage?: string;
   dependencies?: Record<string, string>;
-  engines: { pnpm: string; };
+  engines: { node?: string; pnpm: string; };
 }
 
-const packageJsonGen = async (
-  denoJson: DenoJson,
-  packageJsonExports: PackageJsonExports,
-  outputDir: string,
-): Promise<string> => {
+const packageJsonGet = async (denoJson: DenoJson, packageJsonExports: PackageJsonExports) => {
   const dependencies: Record<string, string> = {};
   Object.entries(denoJson.imports ?? {}).forEach((dep) => {
     const value = dep[1];
@@ -83,7 +79,11 @@ const packageJsonGen = async (
     }],
   });
 
-  await writeJson.async(node_path.join(outputDir, "package.json"), JSON.stringify(packageJson.config, undefined, 2));
+  return { packageJson: packageJson.config, workspacePath: node_path.dirname(packageJson.sources[0]) };
+};
+
+const packageJsonGen = async (packageJson: PackageJson, outputDir: string) => {
+  await writeJson.async(node_path.join(outputDir, "package.json"), JSON.stringify(packageJson, undefined, 2));
   await writeJson.async(
     node_path.join(outputDir, "esm/package.json"),
     JSON.stringify({ "type": "module" }, undefined, 2),
@@ -92,8 +92,6 @@ const packageJsonGen = async (
     node_path.join(outputDir, "cjs/package.json"),
     JSON.stringify({ "type": "commonjs" }, undefined, 2),
   );
-
-  return packageJson.sources[0];
 };
 
 const copyPublicDir = async (rootPath: string, outputDir: string) => {
@@ -137,16 +135,16 @@ export const npmBuild = async (cwd: string) => {
 
   // 添加 package.json 导出
   packageJsonExports["./package.json"] = "./package.json";
+  const { packageJson, workspacePath } = await packageJsonGet(denoJson, packageJsonExports);
 
   await build({
     entry: entries,
     platform: "node",
     format: ["cjs", "esm"],
-    dts: true,
+    dts: { compilerOptions: { isolatedDeclarations: true }, tsconfig: false },
     clean: true,
     skipNodeModulesBundle: true,
     external: Object.keys(denoJson.imports ?? {}),
-
     outputOptions: (options, format) => {
       if (format === "es") {
         options.dir = node_path.join(outputDir, "esm");
@@ -157,9 +155,12 @@ export const npmBuild = async (cwd: string) => {
       return options;
     },
     hooks: {
+      "build:before": (ctx) => {
+        ctx.pkg = packageJson;
+      },
       "build:done": async () => {
-        const denoJsonPath = await packageJsonGen(denoJson, packageJsonExports, outputDir);
-        await copyPublicDir(node_path.dirname(denoJsonPath), outputDir);
+        await packageJsonGen(packageJson, outputDir);
+        await copyPublicDir(workspacePath, outputDir);
       },
     },
   });

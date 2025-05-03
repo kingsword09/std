@@ -29,9 +29,8 @@
     "docs": "deno doc --html --output=\"docs\" --name=\"Kingsword09 Standard Library Docs\" packages/**/*.ts"
   },
   "imports": {
-    "rolldown": "npm:rolldown@^1.0.0-beta.8",
-    "rolldown-plugin-dts": "npm:rolldown-plugin-dts@^0.9.11",
-    "tsdown": "npm:tsdown@^0.10.2",
+    "tsdown": "npm:tsdown@^0.11.0-beta.2",
+    "typescript": "npm:typescript@^5.8.3",
     "unconfig": "npm:unconfig@^7.3.2"
   }
 }
