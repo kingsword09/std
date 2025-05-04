@@ -1,13 +1,13 @@
-# @kingsword09/denokit
+# @kingsword/denokit
 
-[![JSR](https://jsr.io/badges/@kingsword09/denokit)](https://jsr.io/@kingsword09/denokit)
+[![JSR](https://jsr.io/badges/@kingsword/denokit)](https://jsr.io/@kingsword/denokit)
 
 ### Deno
 
 #### Example
 
 ```ts
-import { which } from "jsr:@kingsword09/denokit";
+import { which } from "jsr:@kingsword/denokit";
 
 // Sync
 const denoExecPath = which.sync("deno");

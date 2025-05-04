@@ -1,5 +1,5 @@
-import { readJson, writeJson } from "@kingsword09/nodekit/json";
-import { normalizePath } from "@kingsword09/nodekit/path";
+import { readJson, writeJson } from "@kingsword/nodekit/json";
+import { normalizePath } from "@kingsword/nodekit/path";
 import node_fs from "node:fs/promises";
 import node_path from "node:path";
 import { build } from "tsdown";

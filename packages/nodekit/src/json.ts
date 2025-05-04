@@ -12,7 +12,7 @@ import { readFile, writeFileSimple } from "./fs.ts";
  *
  * @example
  * ```ts
- * import { readJson } from "jsr:@kingsword09/nodekit/fs";
+ * import { readJson } from "jsr:@kingsword/nodekit/fs";
  *
  * // Sync
  * const content = readJson.sync("./file.json");
@@ -40,7 +40,7 @@ export const readJson = quansync(function*<T>(path: string) {
  *
  * @example
  * ```ts
- * import { writeJson } from "jsr:@kingsword09/nodekit/fs";
+ * import { writeJson } from "jsr:@kingsword/nodekit/fs";
  *
  * // Sync
  * writeJson.sync("./file.json", JSON.stringify({ a: 1 }, null, 2));

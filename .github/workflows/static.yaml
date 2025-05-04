@@ -3,7 +3,7 @@ name: Kingsword09 Standard Library Docs
 on:
   push:
     tags:
-      - "@kingsword09/*"
+      - "@kingsword/*"
 
 jobs:
   deploy:

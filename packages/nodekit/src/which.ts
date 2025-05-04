@@ -184,7 +184,7 @@ function getSystemInfo(command: string, environment: Omit<Environment, "stat" | 
  *
  * @example
  * ```ts
- * import { which } from "jsr:@kingsword09/nodekit/which";
+ * import { which } from "jsr:@kingsword/nodekit/which";
  *
  * // Sync
  * const commandPath = which.sync("deno");

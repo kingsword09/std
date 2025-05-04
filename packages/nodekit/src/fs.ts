@@ -41,7 +41,7 @@ const readFileAsync = new Proxy(node_fs.promises.readFile, {
  * @see {@link https://github.com/quansync-dev/fs/blob/cf367ffed0d98716fa1c831ea78f996e3a89dd19/src/index.ts#L22}
  * @example
  * ```ts
- * import { readFile } from "jsr:@kingsword09/nodekit/fs";
+ * import { readFile } from "jsr:@kingsword/nodekit/fs";
  *
  * // Sync
  * const content = readFile.sync("file.txt");
@@ -107,7 +107,7 @@ const writeFileAsync = new Proxy(node_fs.promises.writeFile, {
  *
  * @example
  * ```ts
- * import { writeFileSimple } from "jsr:@kingsword09/nodekit/fs";
+ * import { writeFileSimple } from "jsr:@kingsword/nodekit/fs";
  *
  * // Sync
  * writeFileSimple.sync("file.txt", "Hello World");
@@ -144,7 +144,7 @@ const existsAsync = (path: string): Promise<boolean> => {
  *
  * @example
  * ```ts
- * import { exists } from "jsr:@kingsword09/nodekit/fs";
+ * import { exists } from "jsr:@kingsword/nodekit/fs";
  *
  * // Sync
  * const isExists = exists.sync("file.txt");

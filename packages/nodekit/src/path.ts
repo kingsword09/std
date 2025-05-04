@@ -10,7 +10,7 @@ import { fileURLToPath } from "node:url";
  *
  * @example
  * ```ts
- * import { normalizePath } from "jsr:@kingsword09/nodekit/path";
+ * import { normalizePath } from "jsr:@kingsword/nodekit/path";
  *
  * normalizePath("file:///home/user"); // "/home/user"
  * normalizePath("/home/user"); // "/home/user"

@@ -1,13 +1,13 @@
-# @kingsword09/nodekit
+# @kingsword/nodekit
 
-[![JSR](https://jsr.io/badges/@kingsword09/nodekit)](https://jsr.io/@kingsword09/nodekit)
+[![JSR](https://jsr.io/badges/@kingsword/nodekit)](https://jsr.io/@kingsword/nodekit)
 
 ### Deno
 
 #### Example
 
 ```ts
-import { which } from "jsr:@kingsword09/nodekit";
+import { which } from "jsr:@kingsword/nodekit";
 
 // Sync
 const denoExecPath = which.sync("deno");
@@ -25,7 +25,7 @@ const denoExecPath = await which.async("deno");
 ```bash
 # pnpm >= 10.9.0
 # https://pnpm.io/cli/add#install-from-the-jsr-registry
-pnpm add jsr:@kingsword09/nodekit
+pnpm add jsr:@kingsword/nodekit
 ```
 
 ##### package.json
@@ -33,7 +33,7 @@ pnpm add jsr:@kingsword09/nodekit
 ```json
 {
   "dependencies": {
-    "@kingsword09/nodekit": "jsr:x.y.z"
+    "@kingsword/nodekit": "jsr:x.y.z"
   }
 }
 ```
@@ -41,7 +41,7 @@ pnpm add jsr:@kingsword09/nodekit
 #### Example
 
 ```ts
-import { which } from "@kingsword09/nodekit";
+import { which } from "@kingsword/nodekit";
 
 // Sync
 const denoExecPath = which.sync("deno");
