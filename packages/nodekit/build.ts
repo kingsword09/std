@@ -1,5 +1,11 @@
-import { npmBuild } from "../../scripts/build.ts";
+import { build } from "jsr:@kingsword09/dwpkg";
 
 if (import.meta.main) {
-  npmBuild(import.meta.resolve("./"));
+  await build({
+    config: import.meta.resolve("./deno.json"),
+    jsrRegistry: false,
+    format: "both",
+    platform: "node",
+    external: ["@std/jsonc", "quansync"],
+  });
 }

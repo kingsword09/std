@@ -27,10 +27,5 @@
     "test": "deno test -A",
     "test:coverage": "deno test -A --coverage",
     "docs": "deno doc --html --output=\"docs\" --name=\"Kingsword09 Standard Library Docs\" packages/**/*.ts"
-  },
-  "imports": {
-    "tsdown": "npm:tsdown@^0.11.0-beta.2",
-    "typescript": "npm:typescript@^5.8.3",
-    "unconfig": "npm:unconfig@^7.3.2"
   }
 }
