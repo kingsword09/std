@@ -22,7 +22,7 @@
 export const transformRecordEntries = <T, R>(
   entries: Record<string, T>,
   func: (entry: { key: string; value: T; index: number; }) => R | undefined,
-  keyTransformer?: (key: string) => string,
+  keyTransformer?: (entry: { key: string; value: T; index: number; }) => string,
 ): Record<string, R> => {
   const result: Record<string, R> = {};
   Object.entries(entries).forEach((entry, index) => {
@@ -30,11 +30,12 @@ export const transformRecordEntries = <T, R>(
     const res = func({ key, value, index });
     if (res !== undefined) {
       if (keyTransformer) {
-        result[keyTransformer(key)] = res;
+        result[keyTransformer({ key, value, index })] = res;
       } else {
         result[key] = res;
       }
     }
   });
+
   return result;
 };
