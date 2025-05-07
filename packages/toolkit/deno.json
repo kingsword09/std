@@ -1,0 +1,25 @@
+{
+  "name": "@kingsword/toolkit",
+  "version": "0.0.1",
+  "description": "A collection of JavaScript utility functions",
+  "exports": {
+    ".": "./mod.ts",
+    "./record": "./src/record.ts"
+  },
+  "tasks": {},
+  "license": "Apache-2.0 or MIT",
+  "imports": {},
+  "exclude": [
+    "dist/"
+  ],
+  "publish": {
+    "include": [
+      "src/*.ts",
+      "mod.ts",
+      "README.md"
+    ],
+    "exclude": [
+      "build.ts"
+    ]
+  }
+}
