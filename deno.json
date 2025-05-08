@@ -2,13 +2,6 @@
   "name": "@kingsword09/std",
   "version": "0.0.1",
   "lock": false,
-  "author": "Kingsword kingsword09 <kingsword09@gmail.com>",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kingsword09/std.git"
-  },
-  "homepage": "https://github.com/kingsword09/std#readme",
-  "license": "Apache-2.0 or MIT",
   "exports": {},
   "description": "Personal utility standard library for individual use",
   "workspace": [
