@@ -5,6 +5,7 @@
 
 import type { Buffer } from "node:buffer";
 import node_fs from "node:fs";
+import node_path from "node:path";
 import { quansync, type QuansyncFn } from "quansync";
 import { normalizePath } from "./path.ts";
 
@@ -76,12 +77,19 @@ export const readFile = quansync({
 
 // #region writeFileSimple
 /**
+ * Options for writeFileSimple
+ */
+export type WriteFileSimpleOptions = node_fs.WriteFileOptions & { mkdirIfNotExists?: boolean; };
+/**
  * Using Proxy to intercept file path arguments and normalize them before passing to Node.js fs functions
  * This ensures consistent path handling across different platforms
  */
 const writeFileSync = new Proxy(node_fs.writeFileSync, {
   apply(target, thisArg, argArray) {
     if (typeof argArray[0] === "string") {
+      if (argArray[2] && argArray[2].mkdirIfNotExists) {
+        mkdirIfNotExists.sync(argArray[0]);
+      }
       argArray[0] = normalizePath(argArray[0]);
     }
 
@@ -95,6 +103,9 @@ const writeFileSync = new Proxy(node_fs.writeFileSync, {
 const writeFileAsync = new Proxy(node_fs.promises.writeFile, {
   apply(target, thisArg, argArray) {
     if (typeof argArray[0] === "string") {
+      if (argArray[2] && argArray[2].mkdirIfNotExists) {
+        mkdirIfNotExists.sync(argArray[0]);
+      }
       argArray[0] = normalizePath(argArray[0]);
     }
 
@@ -125,7 +136,7 @@ export const writeFileSimple = quansync({
   sync: writeFileSync,
   // deno-lint-ignore no-explicit-any
   async: writeFileAsync as any,
-}) as QuansyncFn<void, [path: node_fs.PathOrFileDescriptor, data: string, options?: node_fs.WriteFileOptions]>;
+}) as QuansyncFn<void, [path: node_fs.PathOrFileDescriptor, data: string, options?: WriteFileSimpleOptions]>;
 // #endregion
 
 // #region exists
@@ -163,3 +174,47 @@ export const exists: QuansyncFn<boolean, [path: string]> = quansync({
   async: (path: string) => existsAsync(normalizePath(path)),
 });
 // #endregion
+
+// #region mkdirIfNotExists
+/**
+ * Create a directory if it does not exist synchronously
+ */
+const mkdirIfNotExistsSync = (path: string) => {
+  const normalizedPath = normalizePath(path);
+  if (!exists(normalizedPath)) {
+    node_fs.mkdirSync(normalizedPath, { recursive: true });
+  }
+};
+
+/**
+ * Create a directory if it does not exist asynchronously
+ */
+const mkdirIfNotExistsAsync = async (path: string) => {
+  const normalizedPath = normalizePath(path);
+  if (!await exists.async(normalizedPath)) {
+    await node_fs.promises.mkdir(normalizedPath, { recursive: true });
+  }
+};
+
+/**
+ * Create a directory if it does not exist
+ *
+ * @example
+ * ```ts
+ * import { mkdirIfNotExists } from "jsr:@kingsword/nodekit/fs";
+ *
+ * // Sync
+ * mkdirIfNotExists.sync("./foo/bar/baz.txt");
+ *
+ * // Async
+ * await mkdirIfNotExists.async("./foo/bar/baz.txt");
+ * ```
+ *
+ * @param path - Path to create directory
+ * @returns void
+ */
+export const mkdirIfNotExists: QuansyncFn<void, [path: string]> = quansync({
+  sync: mkdirIfNotExistsSync,
+  async: mkdirIfNotExistsAsync,
+});
+// #endregion mkdirIfNotExists
