@@ -1,6 +1,6 @@
 {
   "name": "@kingsword/nodekit",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Node utility standard library for individual use",
   "license": "Apache-2.0 or MIT",
   "exports": {
