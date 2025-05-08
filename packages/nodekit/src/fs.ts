@@ -180,8 +180,11 @@ export const exists: QuansyncFn<boolean, [path: string]> = quansync({
  * Create a directory if it does not exist synchronously
  */
 const mkdirIfNotExistsSync = (path: string) => {
-  const normalizedPath = normalizePath(path);
-  if (!exists(normalizedPath)) {
+  let normalizedPath = normalizePath(path);
+  if(node_path.extname(normalizedPath).length > 0)  {
+    normalizedPath = node_path.dirname(normalizedPath);
+  }
+  if (!exists.sync(normalizedPath)) {
     node_fs.mkdirSync(normalizedPath, { recursive: true });
   }
 };
@@ -190,7 +193,10 @@ const mkdirIfNotExistsSync = (path: string) => {
  * Create a directory if it does not exist asynchronously
  */
 const mkdirIfNotExistsAsync = async (path: string) => {
-  const normalizedPath = normalizePath(path);
+  let normalizedPath = normalizePath(path);
+  if(node_path.extname(normalizedPath).length > 0)  {
+    normalizedPath = node_path.dirname(normalizedPath);
+  }
   if (!await exists.async(normalizedPath)) {
     await node_fs.promises.mkdir(normalizedPath, { recursive: true });
   }
