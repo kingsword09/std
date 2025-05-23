@@ -5,10 +5,14 @@
   "license": "Apache-2.0 or MIT",
   "exports": {
     ".": "./mod.ts",
-    "./which": "./src/which.ts"
+    "./which": "./src/which.ts",
+    "./binary-install": "./src/binary-install.ts"
   },
   "imports": {
     "@david/which": "jsr:@david/which@^0.4.1",
+    "@deno/cache-dir": "jsr:@deno/cache-dir@^0.20.1",
+    "@std/path": "jsr:@std/path@^1.0.9",
+    "@std/tar": "jsr:@std/tar@^0.1.6",
     "quansync": "npm:quansync@^0.2.10"
   },
   "publish": {
