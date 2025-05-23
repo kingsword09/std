@@ -1,6 +1,6 @@
 {
   "name": "@kingsword09/std",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "lock": false,
   "exports": {},
   "description": "Personal utility standard library for individual use",

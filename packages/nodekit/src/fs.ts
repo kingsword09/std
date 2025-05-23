@@ -181,7 +181,7 @@ export const exists: QuansyncFn<boolean, [path: string]> = quansync({
  */
 const mkdirIfNotExistsSync = (path: string) => {
   let normalizedPath = normalizePath(path);
-  if(node_path.extname(normalizedPath).length > 0)  {
+  if (node_path.extname(normalizedPath).length > 0) {
     normalizedPath = node_path.dirname(normalizedPath);
   }
   if (!exists.sync(normalizedPath)) {
@@ -194,7 +194,7 @@ const mkdirIfNotExistsSync = (path: string) => {
  */
 const mkdirIfNotExistsAsync = async (path: string) => {
   let normalizedPath = normalizePath(path);
-  if(node_path.extname(normalizedPath).length > 0)  {
+  if (node_path.extname(normalizedPath).length > 0) {
     normalizedPath = node_path.dirname(normalizedPath);
   }
   if (!await exists.async(normalizedPath)) {
@@ -224,3 +224,46 @@ export const mkdirIfNotExists: QuansyncFn<void, [path: string]> = quansync({
   async: mkdirIfNotExistsAsync,
 });
 // #endregion mkdirIfNotExists
+
+// #region recreateDirectory
+const recreateDirectorySync = (path: string, force: boolean = false) => {
+  const normalizedPath = normalizePath(path);
+  if (exists.sync(normalizedPath)) {
+    node_fs.rmSync(normalizedPath, { recursive: true, force });
+    node_fs.mkdirSync(normalizedPath);
+  } else {
+    node_fs.mkdirSync(normalizedPath, { recursive: true });
+  }
+};
+const recreateDirectoryAsync = async (path: string, force: boolean = false) => {
+  const normalizedPath = normalizePath(path);
+  if (await exists.async(normalizedPath)) {
+    await node_fs.promises.rm(normalizedPath, { recursive: true, force });
+    await node_fs.promises.mkdir(normalizedPath);
+  } else {
+    await node_fs.promises.mkdir(normalizedPath, { recursive: true });
+  }
+};
+/**
+ * Recreate a directory
+ *
+ * @example
+ * ```ts
+ * import { recreateDirectory } from "jsr:@kingsword/nodekit/fs";
+ *
+ * // Sync
+ * recreateDirectory.sync("./foo/bar/baz");
+ *
+ * // Async
+ * await recreateDirectory.async("./foo/bar/baz");
+ * ```
+ *
+ * @param path - Path to create directory
+ * @param force - Force remove directory
+ * @returns void
+ */
+export const recreateDirectory: QuansyncFn<void, [path: string, force?: boolean]> = quansync({
+  sync: recreateDirectorySync,
+  async: recreateDirectoryAsync,
+});
+// #endregion recreateDirectory
