@@ -23,7 +23,7 @@ export class Binary {
     Deno.permissions.requestSync({ name: "run", command: this.#binaryPath });
   }
 
-  exists() {
+  exists(): boolean {
     return exists.sync(this.#binaryPath);
   }
 
