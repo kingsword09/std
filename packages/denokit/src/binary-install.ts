@@ -1,10 +1,47 @@
+/**
+ * A module for installing and managing binary executables.
+ * Provides functionality to download, install and run binary files from URLs.
+ * Handles tar.gz archives and manages binary versions in a configurable install directory.
+ *
+ * @module
+ */
+
 import { DenoDir } from "@deno/cache-dir";
 import { exists, mkdirIfNotExists, recreateDirectory } from "@kingsword/nodekit/fs";
 import * as path from "@std/path";
 import { UntarStream } from "@std/tar/untar-stream";
 
+/**
+ * Configuration options for the Binary class.
+ */
 export type BinaryConfig = { installDirectory: string; };
 
+/**
+ * A class for managing binary executables.
+ * Provides methods to check if a binary exists, install it from a URL, and run it.
+ *
+ * @example
+ * ```ts
+ * const binary = new Binary("wasm-pack", "URL_ADDRESS.com/rustwasm/wasm-pack/releases/download/v0.13.1/wasm-pack-v0.13.1-x86_64-apple-darwin.tar.gz", "v0.13.1");
+ * binary.install();
+ * binary.run();
+ * ```
+ *
+ * @class
+ *
+ * @param name The name of the binary.
+ * @param url The URL of the binary.
+ * @param version The version of the binary.
+ * @param config The configuration options for the Binary class.
+ *
+ * @method exists Checks if the binary exists.
+ * @method install Installs the binary from the URL.
+ * @method run Runs the binary.
+ *
+ * @throws {Error} If the binary is not installed.
+ *
+ * @returns A Promise that resolves when the binary is installed.
+ */
 export class Binary {
   #config: BinaryConfig;
   #binaryPath: string;
@@ -23,10 +60,23 @@ export class Binary {
     Deno.permissions.requestSync({ name: "run", command: this.#binaryPath });
   }
 
+  /**
+   * Checks if the binary exists.
+   *
+   * @returns A boolean indicating whether the binary exists.
+   */
   exists(): boolean {
     return exists.sync(this.#binaryPath);
   }
 
+  /**
+   * Installs the binary from the URL.
+   *
+   * @param fetchOptions The options for the fetch request.
+   * @param suppressLogs Whether to suppress the installation logs.
+   *
+   * @returns A Promise that resolves when the binary is installed.
+   */
   install(fetchOptions: RequestInit = {}, suppressLogs: boolean = false): Promise<void> {
     if (this.exists()) {
       if (!suppressLogs) {
@@ -65,6 +115,13 @@ export class Binary {
     });
   }
 
+  /**
+   * Runs the binary.
+   *
+   * @param fetchOptions The options for the fetch request.
+   *
+   * @returns A Promise that resolves when the binary is run.
+   */
   run(fetchOptions: RequestInit = {}) {
     const promise = !this.exists() ? this.install(fetchOptions, true) : Promise.resolve();
     promise.then(async () => {
