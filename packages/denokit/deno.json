@@ -5,8 +5,9 @@
   "license": "Apache-2.0 or MIT",
   "exports": {
     ".": "./mod.ts",
-    "./which": "./src/which.ts",
-    "./binary-install": "./src/binary-install.ts"
+    "./binary-install": "./src/binary-install.ts",
+    "./download": "./src/download.ts",
+    "./which": "./src/which.ts"
   },
   "imports": {
     "@david/which": "jsr:@david/which@^0.4.1",
