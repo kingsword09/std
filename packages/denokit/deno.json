@@ -1,6 +1,6 @@
 {
   "name": "@kingsword/denokit",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Deno utility standard library for individual use",
   "license": "Apache-2.0 or MIT",
   "exports": {
