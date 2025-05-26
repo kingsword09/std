@@ -129,8 +129,7 @@ export class Binary {
       }
       const binaryExecPath = path.join(this.#binaryPath, this.name);
       await Deno.chmod(binaryExecPath, 0o755);
-      const [, , ...args] = Deno.args;
-      const command = new Deno.Command(binaryExecPath, { cwd: Deno.cwd(), stdin: "inherit", args });
+      const command = new Deno.Command(binaryExecPath, { cwd: Deno.cwd(), stdin: "inherit", args: Deno.args });
       const child = command.spawn();
       const status = await child.status;
 
