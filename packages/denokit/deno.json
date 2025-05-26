@@ -6,6 +6,7 @@
   "exports": {
     ".": "./mod.ts",
     "./binary-install": "./src/binary-install.ts",
+    "./command": "./src/command.ts",
     "./download": "./src/download.ts",
     "./which": "./src/which.ts"
   },
