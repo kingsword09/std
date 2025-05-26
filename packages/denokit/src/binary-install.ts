@@ -55,7 +55,7 @@ export class Binary {
 
     mkdirIfNotExists.sync(this.#config.installDirectory);
 
-    this.#binaryPath = path.join(this.#config.installDirectory, `${this.name}-${this.version}`, this.name);
+    this.#binaryPath = path.join(this.#config.installDirectory, `${this.name}-${this.version}`);
 
     Deno.permissions.requestSync({ name: "run", command: this.#binaryPath });
   }
@@ -122,19 +122,22 @@ export class Binary {
    *
    * @returns A Promise that resolves when the binary is run.
    */
-  run(fetchOptions: RequestInit = {}) {
-    const promise = !this.exists() ? this.install(fetchOptions, true) : Promise.resolve();
-    promise.then(async () => {
-      await Deno.chmod(this.#binaryPath, 0o755);
+  async run(fetchOptions: RequestInit = {}) {
+    try {
+      if (!this.exists()) {
+        await this.install(fetchOptions);
+      }
+      const binaryExecPath = path.join(this.#binaryPath, this.name);
+      await Deno.chmod(binaryExecPath, 0o755);
       const [, , ...args] = Deno.args;
-      const command = new Deno.Command(this.#binaryPath, { cwd: Deno.cwd(), stdin: "inherit", args });
+      const command = new Deno.Command(binaryExecPath, { cwd: Deno.cwd(), stdin: "inherit", args });
       const child = command.spawn();
       const status = await child.status;
 
       Deno.exit(status.code);
-    }).catch(e => {
-      console.error("Install or run failed:", e);
+    } catch (error) {
+      console.error("Install or run failed:", error);
       Deno.exit(1);
-    });
+    }
   }
 }
