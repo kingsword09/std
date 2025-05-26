@@ -13,9 +13,9 @@ import process from "node:process";
 import { which } from "./which.ts";
 
 interface CommandOutputOptions {
-  args?: readonly string[];
-  cmdOpts?: Pick<SpawnOptionsWithoutStdio, "cwd" | "stdio" | "shell">;
-  preHook?: (output: string) => string;
+  args: readonly string[];
+  cmdOpts: Partial<Pick<SpawnOptionsWithoutStdio, "cwd" | "shell">>;
+  preHook: (output: string) => string;
 }
 
 /**
@@ -36,8 +36,8 @@ interface CommandOutputOptions {
  */
 export const commandOutputWithJsonParserAsync = async <T extends unknown>(
   command: string,
-  options: CommandOutputOptions,
-) => {
+  options: Partial<CommandOutputOptions>,
+): Promise<T> => {
   const { args, cmdOpts, preHook } = options;
 
   const child = spawn(await which.async(command) ?? command, args ?? [], {
@@ -88,7 +88,10 @@ export const commandOutputWithJsonParserAsync = async <T extends unknown>(
  * @param options The options to pass to the command.
  * @returns The output of the command.
  */
-export const commandOutputWithJsonParserSync = <T extends unknown>(command: string, options: CommandOutputOptions) => {
+export const commandOutputWithJsonParserSync = <T extends unknown>(
+  command: string,
+  options: Partial<CommandOutputOptions>,
+): T => {
   const { args, cmdOpts, preHook } = options;
 
   const child = spawnSync(which.sync(command) ?? command, args ?? [], {

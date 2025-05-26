@@ -1,10 +1,11 @@
 {
   "name": "@kingsword/nodekit",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Node utility standard library for individual use",
   "license": "Apache-2.0 or MIT",
   "exports": {
     ".": "./mod.ts",
+    "./command": "./src/command.ts",
     "./fs": "./src/fs.ts",
     "./json": "./src/json.ts",
     "./path": "./src/path.ts",
